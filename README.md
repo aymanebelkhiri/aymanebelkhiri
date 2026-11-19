@@ -8,7 +8,9 @@ I build web applications for automotive and service businesses, from public webs
 
 ## GitHub stats
 
-**639 contributions in the past 12 months** · Updated daily from GitHub.
+**643 contributions in the past 12 months** · Updated daily from GitHub.
+
+[![GitHub contribution heatmap showing 643 contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/contribution-heatmap.svg)](https://github.com/aymanebelkhiri#js-contribution-activity-description)
 
 [View the live contribution graph](https://github.com/aymanebelkhiri#js-contribution-activity-description). The total includes eligible private contributions as anonymized counts.
 
