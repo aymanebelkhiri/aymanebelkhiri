@@ -26,7 +26,8 @@ jobs:
           python3 - <<'PY'
           import os
           import re
-          from datetime import date, timedelta
+          import subprocess
+          from datetime import date, datetime, timedelta, timezone
           from hashlib import sha256
           from math import hypot
           from pathlib import Path
@@ -40,18 +41,55 @@ jobs:
               raise SystemExit('GitHub contribution total could not be read. Keeping the last verified value.')
 
           count = f"{int(heading.group(1).replace(',', '')):,}"
-          cells = {}
-          for tag in re.findall(r'<td\b[^>]*>', calendar):
-              attributes = dict(re.findall(r'([\w-]+)="([^"]*)"', tag))
-              if 'data-date' not in attributes or 'data-level' not in attributes:
-                  continue
-              day = date.fromisoformat(attributes['data-date'])
-              level = int(attributes['data-level'])
-              if not 0 <= level <= 4 or day in cells:
-                  raise SystemExit('Unexpected contribution calendar data.')
-              cells[day] = level
+          def parse_days(markup):
+              cells = {}
+              for tag in re.findall(r'<td\b[^>]*>', markup):
+                  attributes = dict(re.findall(r'([\w-]+)="([^"]*)"', tag))
+                  if 'data-date' not in attributes or 'data-level' not in attributes:
+                      continue
+                  day = date.fromisoformat(attributes['data-date'])
+                  level = int(attributes['data-level'])
+                  if not 0 <= level <= 4 or day in cells:
+                      raise SystemExit('Unexpected contribution calendar data.')
+                  cells[day] = level
+              return cells
+
+          cells = parse_days(calendar)
           if not 360 <= len(cells) <= 371 or (max(cells) - min(cells)).days + 1 != len(cells):
               raise SystemExit('Expected a full year of daily contributions.')
+
+          # The account was created in 2023. Use the rolling calendar for overlaps.
+          history = dict(cells)
+          for year in range(2023, min(cells).year + 1):
+              first_day, last_day = date(year, 1, 1), date(year, 12, 31)
+              if first_day >= min(cells):
+                  break
+              url = f'https://github.com/users/aymanebelkhiri/contributions?from={first_day}&to={last_day}'
+              result = subprocess.run(
+                  ['curl', '--fail', '--silent', '--show-error', '--retry', '3', '--max-time', '30', url],
+                  check=True, capture_output=True, encoding='utf-8',
+              )
+              year_days = parse_days(result.stdout)
+              expected_days = {first_day + timedelta(days=i) for i in range((last_day - first_day).days + 1)}
+              if year_days.keys() != expected_days:
+                  raise SystemExit(f'Incomplete calendar for {year}; keeping existing stats.')
+              for day, level in year_days.items():
+                  history.setdefault(day, level)
+
+          today = datetime.now(timezone.utc).date()
+          active_days = sorted(day for day, level in history.items() if level > 0 and day <= today)
+          longest = current = chain = 0
+          previous = None
+          one_day = timedelta(days=1)
+          for day in active_days:
+              chain = chain + 1 if previous == day - one_day else 1
+              longest = max(longest, chain)
+              previous = day
+          if previous in (today, today - one_day):
+              current = chain
+
+          def format_streak(days):
+              return f'{days:,} day' if days == 1 else f'{days:,} days'
 
           first = min(cells)
           start = first - timedelta(days=(first.weekday() + 1) % 7)
@@ -138,6 +176,9 @@ jobs:
           section = (
               '## GitHub stats\n\n'
               f'**{count} contributions in the past 12 months** · Updated daily from GitHub.\n\n'
+              '| Current streak | Longest streak since joining GitHub |\n'
+              '| :--- | :--- |\n'
+              f'| **{format_streak(current)}** | **{format_streak(longest)}** |\n\n'
               f'[![GitHub contribution heatmap showing {count} contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/{heatmap_asset.name})]({graph})\n\n'
               f'[![Animated contribution snake based on {count} GitHub contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/{snake_asset.name})]({graph})\n\n'
               f'[View the live contribution graph]({graph}). The total includes eligible private contributions as anonymized counts.\n\n'
