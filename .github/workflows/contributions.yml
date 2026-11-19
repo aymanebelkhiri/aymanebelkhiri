@@ -124,14 +124,22 @@ jobs:
           snake_file.write_text('\n'.join(animation) + '\n', encoding='utf-8')
           heatmap_version = sha256(graph_file.read_bytes()).hexdigest()[:12]
           snake_version = sha256(snake_file.read_bytes()).hexdigest()[:12]
+          heatmap_asset = graph_file.with_stem(f'contribution-heatmap-{heatmap_version}')
+          snake_asset = snake_file.with_stem(f'contribution-snake-{snake_version}')
+          graph_file.replace(heatmap_asset)
+          snake_file.replace(snake_asset)
+          for pattern, current in [('contribution-heatmap-*.svg', heatmap_asset), ('contribution-snake-*.svg', snake_asset)]:
+              for old_asset in current.parent.glob(pattern):
+                  if old_asset != current:
+                      old_asset.unlink()
           readme = Path('README.md')
           original = readme.read_text(encoding='utf-8')
           graph = 'https://github.com/aymanebelkhiri#js-contribution-activity-description'
           section = (
               '## GitHub stats\n\n'
               f'**{count} contributions in the past 12 months** · Updated daily from GitHub.\n\n'
-              f'[![GitHub contribution heatmap showing {count} contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/contribution-heatmap.svg?v={heatmap_version})]({graph})\n\n'
-              f'[![Animated contribution snake based on {count} GitHub contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/contribution-snake.svg?v={snake_version})]({graph})\n\n'
+              f'[![GitHub contribution heatmap showing {count} contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/{heatmap_asset.name})]({graph})\n\n'
+              f'[![Animated contribution snake based on {count} GitHub contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/{snake_asset.name})]({graph})\n\n'
               f'[View the live contribution graph]({graph}). The total includes eligible private contributions as anonymized counts.\n\n'
           )
           updated, matches = re.subn(
@@ -147,7 +155,7 @@ jobs:
           PY
       - name: Publish the refreshed count
         run: |
-          git add README.md assets/contribution-heatmap.svg assets/contribution-snake.svg
+          git add --all -- README.md assets
           if git diff --cached --quiet; then
             exit 0
           fi
