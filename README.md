@@ -2,51 +2,72 @@
 
 **Full-stack developer · Zaragoza, Spain**
 
-I develop web applications for automotive and service businesses. My work spans customer-facing websites, back-office tools, multi-role workflows, automated tests, and deployment.
+I build web applications for automotive and service businesses, from public websites and product catalogues to back-office tools and multi-role workflows.
+
+[Explore my projects](#selected-projects) · [View my GitHub activity](#js-contribution-activity-description)
+
+## GitHub stats
+
+| Contributions in the past 12 months | Private activity |
+| :--- | :--- |
+| **637** · GitHub snapshot on **19 Nov 2026** | Included in the total when GitHub counts the activity |
+
+[See the current count and contribution graph](#js-contribution-activity-description). GitHub shows private activity as anonymized counts.
 
 ## Technology stack
 
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white) ![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=flat-square&logo=laravel&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB) ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-0F172A?style=flat-square&logo=tailwindcss&logoColor=38BDF8) ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) ![CSS](https://img.shields.io/badge/CSS-663399?style=flat-square&logo=css&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
 
-## Featured projects
+## Selected projects
 
 ### GLASSPHÈRE · Automotive glass marketplace
 
-I contributed to a platform that connects garages with automotive glass technicians in France. My recent work included processing supplier delivery PDFs, updating the public landing page, and automating deployment with GitHub Actions.
+A platform that brings garages and automotive glass technicians together in France. [Visit the live site](https://glassphere.fr/)
 
-**Stack:** PHP, Laravel, Blade, MySQL, JavaScript · [Live site](https://glassphere.fr/)
+- Worked on processing supplier delivery PDFs and updated the public landing page.
+- Automated deployment using GitHub Actions.
+
+**Stack** · PHP, Laravel, Blade, MySQL, JavaScript, GitHub Actions
 
 ### Mecatronic Center · Automotive services and catalogue
 
-I worked on service pricing and photos, tyre catalogue pagination, and the display of tyre sizes and supplier images. I also contributed tests and automated deployment.
+An automotive service website with a public tyre and service catalogue. [Visit the live site](https://mecatroniccenter.fr/)
 
-**Stack:** PHP, Laravel, TypeScript, React, Tailwind CSS, Vite · [Live site](https://mecatroniccenter.fr/)
+- Improved tyre catalogue pagination and how tyre sizes and supplier images are displayed.
+- Worked on service pricing and photos, added tests, and automated deployment.
+
+**Stack** · PHP, Laravel, TypeScript, React, Tailwind CSS, Vite
 
 ### Briglass Gestion · Garage operations
 
-I contributed to a back office for managing glass-repair cases. My work included appointment planning and push notifications for the progressive web app. The application also supports quotes, invoices, credit notes, and PDF documents.
+A back office for glass-repair cases, quotes, invoices, credit notes, and PDF documents.
 
-**Stack:** PHP, Laravel, Blade, JavaScript, Bootstrap, Sass, Vite
+- Worked on appointment planning and push notifications for the progressive web app.
+
+**Stack** · PHP, Laravel, Blade, JavaScript, Bootstrap, Sass, Vite
 
 ### BGG Ambassadors · Referral portal
 
-I worked on a portal with ambassador and admin views, including multi-step referral intake, draft saving, and commission tracking. The repository documents the integration as pending end-to-end validation.
+A portal with separate views for ambassadors and administrators.
 
-**Stack:** PHP, Laravel, TypeScript, Tailwind CSS, Vite
+- Worked on multi-step referral intake, draft saving, and commission tracking.
+- End-to-end integration validation is pending.
+
+**Stack** · PHP, Laravel, TypeScript, Tailwind CSS, Vite
 
 ### WINVECIA Trading · Web application
 
-I contributed to the web application for a trading project, working in the Laravel application and its frontend codebase.
+- Contributed to the Laravel application and React frontend for a trading project.
 
-**Stack:** PHP, Laravel, Inertia, React, TypeScript, Tailwind CSS, Vite
+**Stack** · PHP, Laravel, Inertia, React, TypeScript, Tailwind CSS, Vite
 
 ### Belkhiri Coding · Website and admin workspace
 
-I worked on a Laravel site with a custom design system and a back office for prospect follow-up, conversations, and invoice documents.
+- Worked on the website’s custom design system and a back office for prospect follow-up, conversations, and invoice documents.
 
-**Stack:** PHP, Laravel, Blade, JavaScript, CSS, Sass
+**Stack** · PHP, Laravel, Blade, JavaScript, CSS, Sass
 
-## Other development work
+## Additional projects & practice
 
 | Project | My work | Stack |
 | --- | --- | --- |
