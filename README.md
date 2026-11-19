@@ -8,11 +8,9 @@ I build web applications for automotive and service businesses, from public webs
 
 ## GitHub stats
 
-| Contributions in the past 12 months | Private activity |
-| :--- | :--- |
-| **637** · GitHub snapshot on **19 Nov 2026** | Included in the total when GitHub counts the activity |
+**639 contributions in the past 12 months** · Updated daily from GitHub.
 
-[See the current count and contribution graph](#js-contribution-activity-description). GitHub shows private activity as anonymized counts.
+[View the live contribution graph](https://github.com/aymanebelkhiri#js-contribution-activity-description). The total includes eligible private contributions as anonymized counts.
 
 ## Technology stack
 
