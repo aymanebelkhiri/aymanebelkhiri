@@ -26,6 +26,7 @@ jobs:
           python3 - <<'PY'
           import os
           import re
+          from datetime import date, timedelta
           from pathlib import Path
 
           calendar = (Path(os.environ['RUNNER_TEMP']) / 'contributions.html').read_text(encoding='utf-8')
@@ -37,12 +38,57 @@ jobs:
               raise SystemExit('GitHub contribution total could not be read. Keeping the last verified value.')
 
           count = f"{int(heading.group(1).replace(',', '')):,}"
+          cells = {}
+          for tag in re.findall(r'<td\b[^>]*>', calendar):
+              attributes = dict(re.findall(r'([\w-]+)="([^"]*)"', tag))
+              if 'data-date' not in attributes or 'data-level' not in attributes:
+                  continue
+              day = date.fromisoformat(attributes['data-date'])
+              level = int(attributes['data-level'])
+              if not 0 <= level <= 4 or day in cells:
+                  raise SystemExit('Unexpected contribution calendar data.')
+              cells[day] = level
+          if not 360 <= len(cells) <= 371 or (max(cells) - min(cells)).days + 1 != len(cells):
+              raise SystemExit('Expected a full year of daily contributions.')
+
+          first = min(cells)
+          start = first - timedelta(days=(first.weekday() + 1) % 7)
+          palette = ['#283449', '#145344', '#168468', '#22a984', '#54e1af']
+          svg = [
+              '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 870 220" width="870" height="220" role="img" aria-labelledby="title desc">',
+              '<title id="title">GitHub contribution heatmap</title>',
+              f'<desc id="desc">{count} contributions in the past 12 months, including eligible private activity.</desc>',
+              '<rect x="1" y="1" width="868" height="218" rx="14" fill="#101827" stroke="#334155"/>',
+              '<g font-family="system-ui, sans-serif">',
+              '<text x="24" y="34" fill="#f1f5f9" font-size="19" font-weight="650">Contribution activity</text>',
+              f'<text x="24" y="56" fill="#b8c6db" font-size="13">{count} contributions in the past 12 months</text>',
+          ]
+          last_month_label = -100
+          for day, level in sorted(cells.items()):
+              week, weekday = divmod((day - start).days, 7)
+              x, y = 54 + 15 * week, 85 + 14 * weekday
+              if (day == first or day.day == 1) and x - last_month_label >= 38 and x < 822:
+                  svg.append(f'<text x="{x}" y="77" fill="#b8c6db" font-size="11">{day:%b}</text>')
+                  last_month_label = x
+              svg.append(f'<rect x="{x}" y="{y}" width="11" height="11" rx="2" fill="{palette[level]}"/>')
+          for label, row in [('Mon', 1), ('Wed', 3), ('Fri', 5)]:
+              svg.append(f'<text x="20" y="{94 + 14 * row}" fill="#b8c6db" font-size="10">{label}</text>')
+          svg.append('<text x="24" y="202" fill="#b8c6db" font-size="11">Public and eligible private activity</text>')
+          svg.append('<text x="703" y="202" fill="#b8c6db" font-size="11">Less</text>')
+          for index, color in enumerate(palette):
+              svg.append(f'<rect x="{733 + index * 15}" y="192" width="11" height="11" rx="2" fill="{color}"/>')
+          svg.append('<text x="811" y="202" fill="#b8c6db" font-size="11">More</text>')
+          svg.append('</g></svg>')
+          graph_file = Path('assets/contribution-heatmap.svg')
+          graph_file.parent.mkdir(exist_ok=True)
+          graph_file.write_text('\n'.join(svg) + '\n', encoding='utf-8')
           readme = Path('README.md')
           original = readme.read_text(encoding='utf-8')
           graph = 'https://github.com/aymanebelkhiri#js-contribution-activity-description'
           section = (
               '## GitHub stats\n\n'
               f'**{count} contributions in the past 12 months** · Updated daily from GitHub.\n\n'
+              f'[![GitHub contribution heatmap showing {count} contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/contribution-heatmap.svg)]({graph})\n\n'
               f'[View the live contribution graph]({graph}). The total includes eligible private contributions as anonymized counts.\n\n'
           )
           updated, matches = re.subn(
@@ -58,11 +104,11 @@ jobs:
           PY
       - name: Publish the refreshed count
         run: |
-          if git diff --quiet -- README.md; then
+          git add README.md assets/contribution-heatmap.svg
+          if git diff --cached --quiet; then
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add README.md
-          git commit -m 'Refresh GitHub contribution count'
+          git commit -m 'Refresh GitHub contribution stats'
           git push
