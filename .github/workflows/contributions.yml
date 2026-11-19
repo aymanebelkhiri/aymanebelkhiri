@@ -166,9 +166,9 @@ jobs:
           snake_asset = snake_file.with_stem(f'contribution-snake-{snake_version}')
           graph_file.replace(heatmap_asset)
           snake_file.replace(snake_asset)
-          for pattern, current in [('contribution-heatmap-*.svg', heatmap_asset), ('contribution-snake-*.svg', snake_asset)]:
-              for old_asset in current.parent.glob(pattern):
-                  if old_asset != current:
+          for pattern, current_asset in [('contribution-heatmap-*.svg', heatmap_asset), ('contribution-snake-*.svg', snake_asset)]:
+              for old_asset in current_asset.parent.glob(pattern):
+                  if old_asset != current_asset:
                       old_asset.unlink()
           readme = Path('README.md')
           original = readme.read_text(encoding='utf-8')
