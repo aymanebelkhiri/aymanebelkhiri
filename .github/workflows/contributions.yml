@@ -27,6 +27,7 @@ jobs:
           import os
           import re
           from datetime import date, timedelta
+          from hashlib import sha256
           from math import hypot
           from pathlib import Path
 
@@ -121,14 +122,16 @@ jobs:
           animation.append('</g></g></svg>')
           snake_file = graph_file.with_name('contribution-snake.svg')
           snake_file.write_text('\n'.join(animation) + '\n', encoding='utf-8')
+          heatmap_version = sha256(graph_file.read_bytes()).hexdigest()[:12]
+          snake_version = sha256(snake_file.read_bytes()).hexdigest()[:12]
           readme = Path('README.md')
           original = readme.read_text(encoding='utf-8')
           graph = 'https://github.com/aymanebelkhiri#js-contribution-activity-description'
           section = (
               '## GitHub stats\n\n'
               f'**{count} contributions in the past 12 months** · Updated daily from GitHub.\n\n'
-              f'[![GitHub contribution heatmap showing {count} contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/contribution-heatmap.svg)]({graph})\n\n'
-              f'[![Animated contribution snake based on {count} GitHub contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/contribution-snake.svg)]({graph})\n\n'
+              f'[![GitHub contribution heatmap showing {count} contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/contribution-heatmap.svg?v={heatmap_version})]({graph})\n\n'
+              f'[![Animated contribution snake based on {count} GitHub contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/contribution-snake.svg?v={snake_version})]({graph})\n\n'
               f'[View the live contribution graph]({graph}). The total includes eligible private contributions as anonymized counts.\n\n'
           )
           updated, matches = re.subn(
