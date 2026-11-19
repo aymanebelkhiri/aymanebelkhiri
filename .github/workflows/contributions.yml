@@ -1,0 +1,68 @@
+name: Update GitHub contributions
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 6 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-contributions
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out the profile repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Refresh the README from GitHub's public contribution calendar
+        run: |
+          curl --fail --silent --show-error --retry 3 --max-time 30 \
+            'https://github.com/users/aymanebelkhiri/contributions' \
+            --output "$RUNNER_TEMP/contributions.html"
+          python3 - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          calendar = (Path(os.environ['RUNNER_TEMP']) / 'contributions.html').read_text(encoding='utf-8')
+          heading = re.search(
+              r'id="js-contribution-activity-description"[^>]*>\s*([\d,]+)\s+contributions?\s+in the last year\s*</h2>',
+              calendar,
+          )
+          if not heading:
+              raise SystemExit('GitHub contribution total could not be read. Keeping the last verified value.')
+
+          count = f"{int(heading.group(1).replace(',', '')):,}"
+          readme = Path('README.md')
+          original = readme.read_text(encoding='utf-8')
+          graph = 'https://github.com/aymanebelkhiri#js-contribution-activity-description'
+          section = (
+              '## GitHub stats\n\n'
+              f'**{count} contributions in the past 12 months** · Updated daily from GitHub.\n\n'
+              f'[View the live contribution graph]({graph}). The total includes eligible private contributions as anonymized counts.\n\n'
+          )
+          updated, matches = re.subn(
+              r'^## GitHub stats\n.*?(?=^## Technology stack\b)',
+              lambda _: section,
+              original,
+              flags=re.MULTILINE | re.DOTALL,
+          )
+          if matches != 1:
+              raise SystemExit('Expected exactly one GitHub stats section.')
+          if updated != original:
+              readme.write_text(updated, encoding='utf-8')
+          PY
+      - name: Publish the refreshed count
+        run: |
+          if git diff --quiet -- README.md; then
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md
+          git commit -m 'Refresh GitHub contribution count'
+          git push
