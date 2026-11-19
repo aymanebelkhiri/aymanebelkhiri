@@ -1,16 +1,14 @@
-## Hi there 👋
+# Aymane Belkhiri
 
-<!--
-**aymanebelkhiri/aymanebelkhiri** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+**Full-stack developer · Zaragoza, Spain**
 
-Here are some ideas to get you started:
+I work on web applications that support day-to-day business operations, from customer-facing websites to platforms with workflows for different user roles. My recent work includes PHP and TypeScript projects.
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## Selected work
+
+| Project | What it does | Live site |
+| --- | --- | --- |
+| **GLASSPHÈRE** | Connects automotive glass technicians with garages in France. Garages post jobs, technicians submit offers, and both sides can track interventions in one place. | [Visit GLASSPHÈRE](https://glassphere.fr/) |
+| **Mecatronic Center** | Customer-facing website for an automotive service business. | [Visit Mecatronic Center](https://mecatroniccenter.fr/) |
+
+I contributed to both projects. Their source repositories are private, and the live sites are available above.
