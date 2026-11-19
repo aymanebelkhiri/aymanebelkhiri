@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 870 220" width="870" height="220" role="img" aria-labelledby="title desc">
 <title id="title">GitHub contribution snake</title>
-<desc id="desc">An animated snake collects active days from the GitHub contribution calendar. 647 contributions in the past 12 months.</desc>
+<desc id="desc">An animated snake collects active days from the GitHub contribution calendar. 650 contributions in the past 12 months.</desc>
 <style>@media (prefers-reduced-motion: reduce) { .animated { display: none; } }</style>
 <rect x="1" y="1" width="868" height="218" rx="14" fill="#101827" stroke="#334155"/>
 <g font-family="system-ui, sans-serif">
 <text x="24" y="34" fill="#f1f5f9" font-size="19" font-weight="650">Contribution snake</text>
-<text x="24" y="56" fill="#b8c6db" font-size="13">647 contributions in the past 12 months</text>
+<text x="24" y="56" fill="#b8c6db" font-size="13">650 contributions in the past 12 months</text>
 <text x="54" y="77" fill="#b8c6db" font-size="11">Nov</text>
 <rect x="54" y="85" width="11" height="11" rx="2" fill="#283449"/>
 <rect x="54" y="99" width="11" height="11" rx="2" fill="#283449"/>
@@ -52,9 +52,9 @@
 <rect x="144" y="85" width="11" height="11" rx="2" fill="#283449"/>
 <rect x="144" y="99" width="11" height="11" rx="2" fill="#283449"/>
 <rect x="144" y="113" width="11" height="11" rx="2" fill="#145344"/>
-<rect x="144" y="127" width="11" height="11" rx="2" fill="#54e1af"/>
+<rect x="144" y="127" width="11" height="11" rx="2" fill="#22a984"/>
 <text x="144" y="77" fill="#b8c6db" font-size="11">Jan</text>
-<rect x="144" y="141" width="11" height="11" rx="2" fill="#22a984"/>
+<rect x="144" y="141" width="11" height="11" rx="2" fill="#168468"/>
 <rect x="144" y="155" width="11" height="11" rx="2" fill="#145344"/>
 <rect x="144" y="169" width="11" height="11" rx="2" fill="#145344"/>
 <rect x="159" y="85" width="11" height="11" rx="2" fill="#145344"/>
