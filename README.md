@@ -6,7 +6,6 @@ I build web applications for automotive and service businesses, from public webs
  
 [![Animated contribution snake based on 687 GitHub contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/contribution-snake-319387a94b8a.svg)](https://github.com/aymanebelkhiri#js-contribution-activity-description)
 
-[View the live contribution graph](https://github.com/aymanebelkhiri#js-contribution-activity-description). The total includes eligible private contributions as anonymized counts.
 
 ## Top Languages
 
