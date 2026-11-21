@@ -3,19 +3,7 @@
 **Full-stack developer · Zaragoza, Spain**
 
 I build web applications for automotive and service businesses, from public websites and product catalogues to back-office tools and multi-role workflows.
-
-[Explore my projects](#selected-projects) · [View my GitHub activity](#js-contribution-activity-description)
-
-## GitHub stats
-
-**687 contributions in the past 12 months** · Updated daily from GitHub.
-
-| Current streak | Longest streak since joining GitHub |
-| :--- | :--- |
-| **7 days** | **11 days** |
-
-[![GitHub contribution heatmap showing 687 contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/contribution-heatmap-05f7815a44cd.svg)](https://github.com/aymanebelkhiri#js-contribution-activity-description)
-
+ 
 [![Animated contribution snake based on 687 GitHub contributions](https://raw.githubusercontent.com/aymanebelkhiri/aymanebelkhiri/main/assets/contribution-snake-319387a94b8a.svg)](https://github.com/aymanebelkhiri#js-contribution-activity-description)
 
 [View the live contribution graph](https://github.com/aymanebelkhiri#js-contribution-activity-description). The total includes eligible private contributions as anonymized counts.
